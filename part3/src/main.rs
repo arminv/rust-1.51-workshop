@@ -11,10 +11,29 @@ struct City {
 }
 
 impl City {
+    // NOTE: instead of `City`, the return type could also have been `Self`:
     fn new(city_size: CitySize, is_coastal: bool) -> City {
+        // NOTE: tuple destructuring to get `description` and `residents`:
         let (description, residents) = match city_size {
             CitySize::Town => {
                 let residents = 1_000;
+
+                // NOTE: returning a tuple:
+                (
+                    format!("a *town* of approximately {} residents", residents),
+                    residents,
+                )
+            }
+            CitySize::City => {
+                let residents = 10_000;
+
+                (
+                    format!("a *town* of approximately {} residents", residents),
+                    residents,
+                )
+            }
+            CitySize::Metropolis => {
+                let residents = 1_000_000;
 
                 (
                     format!("a *town* of approximately {} residents", residents),
@@ -46,10 +65,12 @@ impl City {
 
 fn main() {
     // 👉 TODO Use City::new() to create a Metropolis-sized city here
-    let rustville = City {
-        description: String::new(),
-        residents: 0,
-    };
+    // (i.e. replace the commented out code below which is 'hardcoded' version of creating a struct):
+    // let rustville = City {
+    //     description: String::new(),
+    //     residents: 0,
+    // };
+    let rustville = City::new(CitySize::Metropolis, true);
 
     println!("This city is {}", rustville.description);
 
